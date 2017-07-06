@@ -94,20 +94,25 @@ export const loadedEntries = payload => {
 //   };
 // };
 
+export const getEntriesError = error => ({
+  type: 'GET_ENTRIES_ERROR',
+  payload: error
+});
+
 export const getEntriesDispatcher = (url) => {
   return function (dispatch) {
     dispatch(loadingEntries('loading'));
-    fetch(url)
+    return fetch(url)
     .then(response => response.json())
     .then(json => {
-      console.log('json: ', json);
-      dispatch(getEntries(json));
-      setTimeout(() => {
-        // dispatch(loadedEntries('loaded'));
-      }, 1600);
+      // dispatch(getEntries(json));
+      // setTimeout(() => {
+      //   dispatch(loadedEntries('loaded'));
+      // }, 1600);
     })
     .catch(err => {
-      console.log('error in fetch getEntriesDispatcher: ', err);
+      // console.log('error in fetch getEntriesDispatcher: ', err);
+      // dispatch(getEntriesError(err));
     });
   };
 };
