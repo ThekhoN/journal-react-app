@@ -52,7 +52,7 @@ export const signupUser = ({email, password}) => {
       localStorage.setItem('token', response.data.token);
     })
     .catch(err => {
-      console.log('error in signupUser: ', err.response.data.error);
+      // console.log('error in signupUser: ', err.response.data.error);
       dispatch(authError(err.response.data.error));
     });
   };
@@ -67,6 +67,10 @@ export const getEntries = payload => {
     payload
   };
 };
+export const getEntriesError = error => ({
+  type: 'GET_ENTRIES_ERROR',
+  payload: error
+});
 export const loadingEntries = payload => {
   return {
     type: LOADING_ENTRIES,
@@ -80,24 +84,7 @@ export const loadedEntries = payload => {
   };
 };
 
-// export const getEntriesDispatcher = (url) => {
-//   return function (dispatch) {
-//     dispatch(loadingEntries('loading'));
-//     return axios
-//     .get(url)
-//     .then(response => {
-//       // dispatch(getEntries(response.data));
-//       setTimeout(() => {
-//         // dispatch(loadedEntries('loaded'));
-//       }, 1600);
-//     });
-//   };
-// };
-
-export const getEntriesError = error => ({
-  type: 'GET_ENTRIES_ERROR',
-  payload: error
-});
+export const errMessageGetEntriesError = 'ERROR in GET_ENTRIES';
 
 export const getEntriesDispatcher = (url) => {
   return function (dispatch) {
@@ -105,14 +92,9 @@ export const getEntriesDispatcher = (url) => {
     return fetch(url)
     .then(response => response.json())
     .then(json => {
-      // dispatch(getEntries(json));
-      // setTimeout(() => {
-      //   dispatch(loadedEntries('loaded'));
-      // }, 1600);
+      dispatch(getEntries(json));
+      dispatch(loadedEntries('loaded'));
     })
-    .catch(err => {
-      // console.log('error in fetch getEntriesDispatcher: ', err);
-      // dispatch(getEntriesError(err));
-    });
+    .catch(err => dispatch(getEntriesError(errMessageGetEntriesError)));
   };
 };
