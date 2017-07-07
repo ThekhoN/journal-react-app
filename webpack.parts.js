@@ -60,7 +60,7 @@ exports.CSS = function (env) {
               loader: 'css-loader',
               options: {
                 sourceMap: true,
-                modules: false,
+                modules: true,
                 localIdentName: 'main.css'
               }
             }

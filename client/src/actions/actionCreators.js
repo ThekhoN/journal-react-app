@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import 'whatwg-fetch';
 import {
   AUTH_USER,
@@ -20,18 +19,29 @@ export const authError = error => ({
 
 export const signinUser = ({email, password}) => {
   return function (dispatch) {
-    return axios
-    .post(`${ROOT_URL}/signin`, {email, password})
-    .then(response => {
-      console.log('response: ', response);
+    return fetch(`${ROOT_URL}/signin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    })
+    // .post(`${ROOT_URL}/signin`, {email, password})
+    .then(response => response.json())
+    .then(responseJson => {
+      console.log('responseJson: ', responseJson);
       // if req is good & auth'd
       // update state to auth'd
       dispatch({type: AUTH_USER});
       // save JWT in localStorage
-      localStorage.setItem('token: ', response.data.token);
+      localStorage.setItem('token', responseJson.token);
+      console.log('saved token:', localStorage.getItem('token'));
     })
     .catch((err) => {
-      console.log('error in signinUser: ', err);
+      // console.log('error in signinUser: ', err);
       dispatch(authError('Your email or password is incorrect. \n Please try again.'));
     });
   };
@@ -45,11 +55,20 @@ export const signoutUser = () => {
 
 export const signupUser = ({email, password}) => {
   return function (dispatch) {
-    return axios
-    .post(`${ROOT_URL}/signup`, {email, password})
-    .then(response => {
+    return fetch(`${ROOT_URL}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    })
+    .then(response => response.json())
+    .then(responseJson => {
       dispatch({type: AUTH_USER});
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', responseJson.data.token);
     })
     .catch(err => {
       // console.log('error in signupUser: ', err.response.data.error);

@@ -1,8 +1,8 @@
 import React from 'react';
-import ConnectedSignin, {Signin} from '../../src/containers/signin';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 import configureStore from 'redux-mock-store';
+import ConnectedSignin, {Signin} from '../../src/containers/signin';
 
 describe('Signin Component renders React Components', () => {
   let wrapper;

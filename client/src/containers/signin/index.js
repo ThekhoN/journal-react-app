@@ -31,7 +31,9 @@ export class Signin extends Component {
   render () {
     const {handleSubmit, errorMessage, authenticated} = this.props;
     if (authenticated) {
-      return (<h2>Authenticated</h2>);
+      console.log('user is authenticated...redirecting to route:/user');
+      // return (<Redirect to='/user' />);
+      // return (<h2>A</h2>)
     }
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>

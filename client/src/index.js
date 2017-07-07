@@ -6,6 +6,15 @@ import {Provider} from 'react-redux';
 import store from './store';
 const mountNode = document.getElementById('root');
 
+if (window.localStorage) {
+  const token = localStorage.getItem('token');
+  if (token) {
+    store.dispatch({
+      type: 'AUTH_USER'
+    });
+  }
+}
+
 render(
   <Provider store={store}>
     <App />
