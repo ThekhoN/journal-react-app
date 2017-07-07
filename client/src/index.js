@@ -12,6 +12,10 @@ if (window.localStorage) {
     store.dispatch({
       type: 'AUTH_USER'
     });
+  } else {
+    store.dispatch({
+      type: 'UNAUTH_USER'
+    });
   }
 }
 

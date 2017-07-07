@@ -33,7 +33,7 @@ exports.CSS = function (env) {
                 loader: ['css-loader'],
                 options: {
                   sourceMap: true,
-                  modules: false,
+                  modules: true,
                   localIdentName: '[path][name]__[local]--[hash:base64:5]'
                 }
               }
@@ -61,7 +61,7 @@ exports.CSS = function (env) {
               options: {
                 sourceMap: true,
                 modules: true,
-                localIdentName: 'main.css'
+                localIdentName: '[path][name]__[local]--[hash:base64:5]'
               }
             }
           ]

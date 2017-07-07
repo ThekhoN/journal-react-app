@@ -29,25 +29,22 @@ export const signinUser = ({email, password}) => {
         password
       })
     })
-    // .post(`${ROOT_URL}/signin`, {email, password})
     .then(response => response.json())
     .then(responseJson => {
-      console.log('responseJson: ', responseJson);
       // if req is good & auth'd
       // update state to auth'd
       dispatch({type: AUTH_USER});
       // save JWT in localStorage
       localStorage.setItem('token', responseJson.token);
-      console.log('saved token:', localStorage.getItem('token'));
     })
     .catch((err) => {
-      // console.log('error in signinUser: ', err);
       dispatch(authError('Your email or password is incorrect. \n Please try again.'));
     });
   };
 };
 
 export const signoutUser = () => {
+  localStorage.removeItem('token');
   return {
     type: UNAUTH_USER
   };
@@ -67,12 +64,19 @@ export const signupUser = ({email, password}) => {
     })
     .then(response => response.json())
     .then(responseJson => {
-      dispatch({type: AUTH_USER});
-      localStorage.setItem('token', responseJson.data.token);
+      if (responseJson.error) {
+        dispatch(authError(responseJson.error));
+        return false;
+      } else {
+        dispatch({type: AUTH_USER});
+        console.log('responseJson in signup: ', responseJson);
+        localStorage.setItem('token', responseJson.token);
+      }
     })
     .catch(err => {
-      // console.log('error in signupUser: ', err.response.data.error);
-      dispatch(authError(err.response.data.error));
+      console.log('error in signupUser: ', err);
+      // dispatch(authError(err.response.data.error));
+      dispatch(authError('Error in signup...'));
     });
   };
 };

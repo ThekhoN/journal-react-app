@@ -1,8 +1,4 @@
-body {
-  font-family: sans-serif;
-}
-
-.form-container {
+.formContainer {
   background: orange;
   padding: 1em;
   box-sizing: border-box;

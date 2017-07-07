@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Header from '../../components/header';
-import Signin from '../signin';
+import LandingAuth from '../landing-auth';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
 
@@ -13,7 +13,7 @@ export class Home extends Component {
       );
     }
     return (
-      <Signin />
+      <LandingAuth />
     );
   }
 }

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Field, reduxForm} from 'redux-form';
-import {Redirect} from 'react-router-dom';
 import {signinUser} from '../../actions/actionCreators';
+import styles from './style.css';
 
 const renderField = ({
     input,
@@ -36,25 +36,27 @@ export class Signin extends Component {
       // return (<h2>A</h2>)
     }
     return (
-      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <Field
-          type='text'
-          name='email'
-          placeholder='email'
-          component={renderField}
-          label='email'
-        />
-        <Field
-          type='password'
-          name='password'
-          placeholder='password'
-          component={renderField}
-          label='password'
-        />
-        {errorMessage && <span className='error-text'>{errorMessage}</span>}
-        <br />
-        <button type='submit'>Sign in</button>
-      </form>
+      <div className={styles.formContainer}>
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+          <Field
+            type='text'
+            name='email'
+            placeholder='email'
+            component={renderField}
+            label='email'
+          />
+          <Field
+            type='password'
+            name='password'
+            placeholder='password'
+            component={renderField}
+            label='password'
+          />
+          {errorMessage && <span className='error-text'>{errorMessage}</span>}
+          <br />
+          <button type='submit'>Sign in</button>
+        </form>
+      </div>
     );
   }
 }
