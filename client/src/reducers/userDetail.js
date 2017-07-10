@@ -1,4 +1,4 @@
-const userEmail = (state = {email: '', data: []}, action) => {
+const userDetail = (state = {email: ''}, action) => {
   switch (action.type) {
     case 'FETCH_USER_EMAIL':
       return {...state, email: action.payload};
@@ -7,4 +7,4 @@ const userEmail = (state = {email: '', data: []}, action) => {
   }
 };
 
-export default userEmail;
+export default userDetail;

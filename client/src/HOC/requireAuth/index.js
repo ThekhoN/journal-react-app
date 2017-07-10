@@ -7,10 +7,10 @@ const requireAuth = ComposeComponent => {
     render () {
       const {authenticated} = this.props;
       if (!authenticated) {
-        console.log('not authd... we should redirect!');
+        // console.log('not authd... we should redirect!');
         return (<Redirect to='/' />);
       } else {
-        console.log('authd...show route!');
+        // console.log('authd...show route!');
         return (<ComposeComponent {...this.props} />);
       }
     }

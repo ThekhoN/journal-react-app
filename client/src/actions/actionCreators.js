@@ -34,8 +34,10 @@ export const signinUser = ({email, password}) => {
       // if req is good & auth'd
       // update state to auth'd
       dispatch({type: AUTH_USER});
+      dispatch({type: 'FETCH_USER_EMAIL', payload: email});
       // save JWT in localStorage
       localStorage.setItem('token', responseJson.token);
+      localStorage.setItem('userEmail', email);
     })
     .catch((err) => {
       dispatch(authError('Your email or password is incorrect. \n Please try again.'));
@@ -45,6 +47,7 @@ export const signinUser = ({email, password}) => {
 
 export const signoutUser = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem('userEmail');
   return {
     type: UNAUTH_USER
   };
@@ -69,8 +72,9 @@ export const signupUser = ({email, password}) => {
         return false;
       } else {
         dispatch({type: AUTH_USER});
-        console.log('responseJson in signup: ', responseJson);
+        dispatch({type: 'FETCH_USER_EMAIL', payload: email});
         localStorage.setItem('token', responseJson.token);
+        localStorage.setItem('userEmail', email);
       }
     })
     .catch(err => {
@@ -120,4 +124,43 @@ export const getEntriesDispatcher = (url) => {
     })
     .catch(err => dispatch(getEntriesError(errMessageGetEntriesError)));
   };
+};
+
+// author ~ email
+export const submitEntryDispatcher = ({author, text, tag}) => {
+  if (!tag) {
+    tag = [];
+  }
+  return function (dispatch) {
+    dispatch({type: 'SUBMIT_USER_ENTRY', payload: {author, text, tag}});
+    // dispatch(submitEntrySubmitting('submitting'));
+    return fetch(`${ROOT_URL}/entry`, {
+      method: 'POST',
+      headers: {
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        author,
+        text,
+        tag
+      })
+    })
+    .then(response => response.json())
+    .then(responseJson => {
+      console.log('responseJson: ', responseJson);
+      if (responseJson.error) {
+        // dispatch(submitEntryError(responseJson.error));
+        return false;
+      } else {
+        console.log('responseJson: ', responseJson);
+        // dispatch(submittedEntrySubmitting('submitted'));
+      }
+    })
+    .catch(err => {
+      console.log('error in submitEntry: ', err);
+      // dispatch(submitEntryError('Error in submitEntry'));
+    });
+  }
 };

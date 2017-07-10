@@ -8,9 +8,14 @@ const mountNode = document.getElementById('root');
 
 if (window.localStorage) {
   const token = localStorage.getItem('token');
-  if (token) {
+  const userEmail = localStorage.getItem('userEmail');
+  if (token && userEmail) {
     store.dispatch({
       type: 'AUTH_USER'
+    });
+    store.dispatch({
+      type: 'FETCH_USER_EMAIL',
+      payload: userEmail
     });
   } else {
     store.dispatch({

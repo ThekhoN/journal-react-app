@@ -1,13 +1,15 @@
 import {combineReducers} from 'redux';
 import auth from './auth';
 import entries from './entries';
-import userEmail from './userEmail';
+import userDetail from './userDetail';
+import userEntry from './userEntry';
 import {reducer as formReducer} from 'redux-form';
 
 const rootReducer = combineReducers({
   auth,
   entries,
-  userEmail,
+  userDetail,
+  userEntry,
   form: formReducer
 });
 

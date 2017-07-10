@@ -38,6 +38,20 @@ exports.CSS = function (env) {
                 }
               }
             })
+          },
+          {
+            test: /\.css$/,
+            include: /styles-global/,
+            use: [
+              'style-loader',
+              {
+                loader: 'css-loader',
+                options: {
+                  sourceMap: true,
+                  modules: false
+                }
+              }
+            ]
           }
         ]
       },
@@ -54,6 +68,7 @@ exports.CSS = function (env) {
       rules: [
         {
           test: /\.css$/,
+          exclude: /styles-global/,
           use: [
             'style-loader',
             {
@@ -62,6 +77,20 @@ exports.CSS = function (env) {
                 sourceMap: true,
                 modules: true,
                 localIdentName: '[path][name]__[local]--[hash:base64:5]'
+              }
+            }
+          ]
+        },
+        {
+          test: /\.css$/,
+          include: /styles-global/,
+          use: [
+            'style-loader',
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                modules: false
               }
             }
           ]

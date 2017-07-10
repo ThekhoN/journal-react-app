@@ -32,7 +32,9 @@ const dummyEntries = [
 
 export class Entries extends Component {
   componentDidMount () {
-    this.props.handleGetEntries(ROOT_URL);
+    const {user} = this.props;
+    console.log('user: ', user);
+    this.props.handleGetEntries(`${ROOT_URL}/user/${user}`);
   }
   render () {
     const {data} = this.props;
@@ -41,7 +43,7 @@ export class Entries extends Component {
       <div>
         {
           data.map(entry => (
-            <div key={entry.text}>
+            <div key={entry._id}>
               {entry.text}
             </div>
           ))
@@ -52,7 +54,8 @@ export class Entries extends Component {
 }
 
 const mapStateToProps = state => ({
-  data: state.entries.data
+  data: state.entries.data,
+  user: state.userDetail.email
 });
 const mapDispatchToProps = dispatch => ({
   handleGetEntries: (url) => {

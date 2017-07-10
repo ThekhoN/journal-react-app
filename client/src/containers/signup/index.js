@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Field, reduxForm} from 'redux-form';
+import {Field, reduxForm, stopSubmit} from 'redux-form';
 import {signupUser} from '../../actions/actionCreators';
+import styles from './style.css';
 import {Redirect} from 'react-router-dom';
 
 const renderField = ({
@@ -25,6 +26,10 @@ const renderField = ({
 };
 
 export class Signup extends Component {
+  componentDidMount () {
+    // console.log('reset all errors in signup');
+    // this.props.handleResetFormError();
+  }
   handleFormSubmit ({email, password}) {
     console.log('submitting signup: ', {email, password});
     this.props.handleSignupUser({email, password});
@@ -33,6 +38,7 @@ export class Signup extends Component {
     const {handleSubmit, errorMessage, authenticated} = this.props;
     if (authenticated) {
       console.log('authenticated, you have successfully signed up!');
+      return (<Redirect to='/user' />);
     }
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
@@ -57,7 +63,7 @@ export class Signup extends Component {
           component={renderField}
           label='confirm password'
         />
-        {errorMessage && <span className='error-text'>{errorMessage}</span>}
+        {errorMessage && <div className={styles.errorText}>{errorMessage}</div>}
         <br />
         <button
           action='submit'
@@ -90,6 +96,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   handleSignupUser: ({email, password}) => {
     dispatch(signupUser({email, password}));
+  },
+  handleResetFormError: () => {
+    dispatch(stopSubmit('signin', {}));
+    dispatch(stopSubmit('signup', {}));
   }
 });
 

@@ -21,12 +21,12 @@ export class Nav extends Component {
   render () {
     return (
           <div className='nav'>
-            <NavLink to='/'
+            <NavLink exact to='/user'
               className={styles.navLink}
               activeClassName={styles.active}>
               Journal
             </NavLink>
-            <NavLink to='/about'
+            <NavLink exact to='/about'
               className={styles.navLink}
               activeClassName={styles.active}>
               About
